@@ -26,8 +26,9 @@ import { useToast } from "./ui/use-toast";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { Card } from "./ui/card";
 const formSchema = z.object({
-  geography: z.string(),
+  geography: z.string({}),
   dept: z.string(),
   Trends: z.string(),
   additional_details: z.string().optional(),
@@ -35,7 +36,6 @@ const formSchema = z.object({
   email: z.string().email(),
   filename: z.string().optional(),
 });
-
 const TrendForm = () => {
   const router = useRouter();
   const { toast } = useToast();
@@ -85,149 +85,165 @@ const TrendForm = () => {
   }
 
   return (
-    <Form {...form}>
-      <div className="p-6 rounded-md space-y-4 bg-[#F4F6FC] w-[80%] ">
-        <div className="text-2xl text-[#28293D] flex items-center  antialiased font-bold">
-          <Link href={"/"}>
-            {" "}
-            <ArrowLeft className="w-4 h-4 mr-2 cursor-pointer" />
-          </Link>
-          <span>Horizon Scanner -Trend Generator</span>
-        </div>
-        <h1 className="text-sm font-medium">
-          To generate a Trend, provide us with some basic details:
-        </h1>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-6 rounded-lg p-4 text-sm bg-[#FFFFFF] shadow-md"
-        >
-          <FormField
-            control={form.control}
-            name="geography"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-smpl-1 text-[#808080]">
-                  Geography
-                </FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="dept"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-smpl-1 text-[#808080]">
-                  Department Name
-                </FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="Trends"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-smpl-1 text-[#808080]">
-                  Select a trend
-                </FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a trend" />
-                    </SelectTrigger>
+    <div className="w-full p-5">
+      <h2 className="my-8 text-2xl font-bold w-[30%]">Just Few Inputs Away From Generating your Strategy Hub</h2>
+      <Form {...form}>
+        <div className="p-6 rounded-md space-y-4 bg-[#e9eefd]">
+          <h1 className="text-md font-semibold">
+            To generate a Trend, provide us with some basic details:
+          </h1>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-6 rounded-lg p-4 text-sm bg-[#FFFFFF] shadow-md"
+          >
+            <FormField
+              control={form.control}
+              name="geography"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-smpl-1 font-semibold">
+                    What Geography Are You Looking After?
+                  </FormLabel>
+                  <FormControl className="bg-gray-100 hover:bg-gray-200">
+                    <Input placeholder="Input" {...field} />
                   </FormControl>
-                  <SelectContent>
-                    <SelectItem value={"none"}>{"None"}</SelectItem>
-                    {trends.map((item, idx) => (
-                      <SelectItem key={idx} value={item.value}>
-                        {item.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="additional_details"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-smpl-1 text-[#808080]">
-                  Additional Detail
-                </FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="no_of_gen"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-smpl-1 text-[#808080]">
-                  No of generations
-                </FormLabel>
-                <FormControl>
-                  <Input min={2} type="number" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-smpl-1 text-[#808080]">
-                  Receipent Email Id
-                </FormLabel>
-                <FormControl>
-                  <Input type="email" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="filename"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-smpl-1 text-[#808080]">
-                  Preferred File Name
-                </FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit" variant={"primary"}>
-            Generate
-          </Button>
-        </form>
-      </div>
-    </Form>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="dept"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-smpl-1 font-semibold">
+                    Your Department
+                  </FormLabel>
+                  <FormControl className="bg-gray-100 hover:bg-gray-200">
+                    <Input placeholder="Input" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="additional_details"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-smpl-1 font-semibold">
+                    Any Other Details
+                  </FormLabel>
+                  <FormControl className="bg-gray-100 hover:bg-gray-200">
+                    <Input placeholder="Provide Details" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="additional_details"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-smpl-1 font-semibold">
+                    Preferred Filename
+                  </FormLabel>
+                  <FormControl className="bg-gray-100 hover:bg-gray-200">
+                    <Input placeholder="Provide Preferred Filename" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="Trends"
+              render={({ field }) => (
+                <div className="flex flex-col">
+                  <FormLabel className="text-smpl-1 font-semibold">
+                    Select Data To Be Generated
+                  </FormLabel>
+                  <div className="flex pt-3">
+                    <Card className="w-[50%] p-8">
+                      <FormItem>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl className="bg-gray-100 hover:text-blue-600 hover:border-blue-600 hover:font-bold">
+                            <SelectTrigger>
+                              <SelectValue placeholder="Choose Generate Trend" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value={"none"}>{"None"}</SelectItem>
+                            {trends.map((item, idx) => (
+                              <SelectItem key={idx} value={item.value}>
+                                {item.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    </Card>
+                  </div>
+                </div>
+              )}
+            />
+            {/* <FormField
+              control={form.control}
+              name="no_of_gen"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-smpl-1 text-[#808080]">
+                    No of generations
+                  </FormLabel>
+                  <FormControl>
+                    <Input min={2} type="number" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            /> */}
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-smpl-1 text-[#808080]">
+                    Receipent Email Id
+                  </FormLabel>
+                  <FormControl>
+                    <Input type="email" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="filename"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-smpl-1 text-[#808080]">
+                    Preferred File Name
+                  </FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit" variant={"primary"}>
+              Generate
+            </Button>
+          </form>
+        </div>
+      </Form>
+    </div>
   );
 };
 
