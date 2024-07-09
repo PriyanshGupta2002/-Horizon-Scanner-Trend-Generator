@@ -26,29 +26,36 @@ import { useToast } from "./ui/use-toast";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 const formSchema = z.object({
-  geography: z.string(),
-  dept: z.string(),
-  Trends: z.string(),
+  geography: z.string({
+    required_error: "Geography is required",
+  }),
+  dept: z.string({
+    required_error: "Department name is required",
+  }),
+  dept_invloved_in: z.string({
+    required_error: "Work Department Involved in is required.",
+  }),
+  Trends: z.string({
+    required_error: "Trend is required",
+  }),
+
   additional_details: z.string().optional(),
   no_of_gen: z.number().min(2).optional(),
   email: z.string().email(),
   filename: z.string().optional(),
+  attachments: z.array(z.instanceof(File)).optional(),
 });
 
 const TrendForm = () => {
   const router = useRouter();
+
   const { toast } = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      geography: "",
-      additional_details: "",
-      dept: "",
-      email: "",
-      filename: "",
       no_of_gen: 2,
-      Trends: "",
     },
   });
 
@@ -84,16 +91,14 @@ const TrendForm = () => {
     }
   }
 
+  const [fileLength, setFileLength] = useState<string>("");
+
   return (
     <Form {...form}>
-      <div className="p-6 rounded-md space-y-4 bg-[#F4F6FC] w-[80%] ">
-        <div className="text-2xl text-[#28293D] flex items-center  antialiased font-bold">
-          <Link href={"/"}>
-            {" "}
-            <ArrowLeft className="w-4 h-4 mr-2 cursor-pointer" />
-          </Link>
-          <span>Horizon Scanner -Trend Generator</span>
-        </div>
+      <div className="text-darkBlack700 pl-5 w-1/3 font-semibold text-2xl mt-3">
+        Just a Few Inputs Away From Generating Your Strategy Hub
+      </div>
+      <div className="p-6 mt-7 rounded-md space-y-4 bg-[#F4F6FC] w-full max-w-4xl">
         <h1 className="text-sm font-medium">
           To generate a Trend, provide us with some basic details:
         </h1>
@@ -106,8 +111,11 @@ const TrendForm = () => {
             name="geography"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-smpl-1 text-[#808080]">
-                  Geography
+                <FormLabel className="text-sm pl-1 relative text-[#808080] ">
+                  What Geography are you looking for?
+                  <span className="text-rose-500 absolute -top-1 -right-2">
+                    *
+                  </span>
                 </FormLabel>
                 <FormControl>
                   <Input {...field} />
@@ -121,8 +129,29 @@ const TrendForm = () => {
             name="dept"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-smpl-1 text-[#808080]">
-                  Department Name
+                <FormLabel className="text-sm pl-1 relative text-[#808080]">
+                  Your Department
+                  <span className="text-rose-500 absolute -top-1 -right-2">
+                    *
+                  </span>
+                </FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="dept_invloved_in"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-sm pl-1 relative text-[#808080]">
+                  Work Department Involved In
+                  <span className="text-rose-500 absolute -top-1 -right-2">
+                    *
+                  </span>
                 </FormLabel>
                 <FormControl>
                   <Input {...field} />
@@ -136,12 +165,13 @@ const TrendForm = () => {
             name="Trends"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-smpl-1 text-[#808080]">
+                <FormLabel className="text-sm pl-1 text-[#808080]">
                   Select a trend
                 </FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
+                  dir="ltr"
                 >
                   <FormControl>
                     <SelectTrigger>
@@ -157,18 +187,18 @@ const TrendForm = () => {
                     ))}
                   </SelectContent>
                 </Select>
-
                 <FormMessage />
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="additional_details"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-smpl-1 text-[#808080]">
-                  Additional Detail
+                <FormLabel className="text-sm pl-1 text-[#808080]">
+                  Any other details
                 </FormLabel>
                 <FormControl>
                   <Input {...field} />
@@ -177,12 +207,53 @@ const TrendForm = () => {
               </FormItem>
             )}
           />
+
+          <FormField
+            control={form.control}
+            name="attachments"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel
+                  htmlFor="files"
+                  className="text-sm pl-1 flex flex-col text-[#808080]"
+                >
+                  Provide attachments if any
+                  <div className="w-32 mt-3 bg-lightWhite400 p-2 text-center rounded-md">
+                    + Attach {fileLength?.length}
+                  </div>
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    type="file"
+                    accept=".pdf"
+                    multiple
+                    id="files"
+                    className="h-0 w-0 p-0"
+                    onChange={(e) => {
+                      if (!e.target.files) {
+                        return;
+                      }
+                      const files = Array.from(e.target.files);
+                      const oldFiles = form.getValues("attachments");
+                      const newFiles = [...files, ...(oldFiles || [])];
+                      console.log(newFiles.length.toString());
+                      setFileLength(newFiles.length.toString());
+
+                      field.onChange(newFiles);
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name="no_of_gen"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-smpl-1 text-[#808080]">
+                <FormLabel className="text-sm pl-1 text-[#808080]">
                   No of generations
                 </FormLabel>
                 <FormControl>
@@ -197,7 +268,7 @@ const TrendForm = () => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-smpl-1 text-[#808080]">
+                <FormLabel className="text-sm pl-1 text-[#808080]">
                   Receipent Email Id
                 </FormLabel>
                 <FormControl>
@@ -212,7 +283,7 @@ const TrendForm = () => {
             name="filename"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-smpl-1 text-[#808080]">
+                <FormLabel className="text-sm pl-1 text-[#808080]">
                   Preferred File Name
                 </FormLabel>
                 <FormControl>
@@ -222,6 +293,7 @@ const TrendForm = () => {
               </FormItem>
             )}
           />
+
           <Button type="submit" variant={"primary"}>
             Generate
           </Button>
