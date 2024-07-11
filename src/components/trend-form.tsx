@@ -94,7 +94,7 @@ const TrendForm = () => {
   const [fileLength, setFileLength] = useState<string>("");
 
   return (
-    <div className="w-full p-5">
+    <div className="w-[80%] p-5">
       <h2 className="my-8 text-2xl font-bold w-[30%]">Just Few Inputs Away From Generating your Strategy Hub</h2>
       <Form {...form}>
         <div className="p-6 rounded-md space-y-4 bg-[#e9eefd]">
@@ -152,7 +152,7 @@ const TrendForm = () => {
             />
             <FormField
               control={form.control}
-              name="additional_details"
+              name="filename"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-smpl-1 font-semibold">
@@ -165,42 +165,89 @@ const TrendForm = () => {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="Trends"
-              render={({ field }) => (
-                <div className="flex flex-col">
-                  <FormLabel className="text-smpl-1 font-semibold">
-                    Select Data To Be Generated
-                  </FormLabel>
-                  <div className="flex pt-3">
-                    <Card className="w-[50%] p-8">
-                      <FormItem>
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
-                          <FormControl className="bg-gray-100 hover:text-blue-600 hover:border-blue-600 hover:font-bold">
-                            <SelectTrigger>
-                              <SelectValue placeholder="Choose Generate Trend" />
-                            </SelectTrigger>
+            <div className="flex items-end">
+              <div className="w-[50%] mr-2">
+                <FormField
+                  control={form.control}
+                  name="Trends"
+                  render={({ field }) => (
+                    <div className="flex flex-col">
+                      <FormLabel className="text-smpl-1 font-semibold">
+                        Select Data To Be Generated
+                      </FormLabel>
+                      <Card className="p-5">
+                        <FormItem>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <FormControl className="bg-gray-100 hover:text-blue-600 hover:border-blue-600 hover:font-bold">
+                              <SelectTrigger>
+                                <SelectValue placeholder="Choose Generate Trend" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value={"none"}>{"None"}</SelectItem>
+                              {trends.map((item, idx) => (
+                                <SelectItem key={idx} value={item.value}>
+                                  {item.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      </Card>
+                    </div>
+                  )}
+                />
+              </div>
+              <div className="w-[50%]">
+                <FormField
+                  control={form.control}
+                  name="attachments"
+                  render={({ field }) => (
+                    <div className="flex flex-col">
+                      <FormLabel
+                        htmlFor="files"
+                        className="text-sm pl-1 flex flex-col font-semibold"
+                      >
+                        Provide attachments (if any)
+                      </FormLabel>
+                      <Card className="p-5">
+                          <div className="bg-gray-100 h-10 w-full border border-dashed border-gray-400 hover:bg-gray-200 flex justify-center items-center rounded-md">
+                            + Attach {fileLength?.length}
+                          </div>
+                        <FormItem>
+                          <FormControl>
+                            <Input
+                              type="file"
+                              accept=".pdf"
+                              multiple
+                              id="files"
+                              className="h-0 w-0 p-0"
+                              onChange={(e) => {
+                                if (!e.target.files) {
+                                  return;
+                                }
+                                const files = Array.from(e.target.files);
+                                const oldFiles = form.getValues("attachments");
+                                const newFiles = [...files, ...(oldFiles || [])];
+                                console.log(newFiles.length.toString());
+                                setFileLength(newFiles.length.toString());
+
+                                field.onChange(newFiles);
+                              }}
+                            />
                           </FormControl>
-                          <SelectContent>
-                            <SelectItem value={"none"}>{"None"}</SelectItem>
-                            {trends.map((item, idx) => (
-                              <SelectItem key={idx} value={item.value}>
-                                {item.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    </Card>
-                  </div>
-                </div>
-              )}
-            />
+                          <FormMessage />
+                        </FormItem>
+                      </Card>
+                    </div>
+                  )}
+                />
+              </div>
+            </div>
             {/* <FormField
               control={form.control}
               name="no_of_gen"
