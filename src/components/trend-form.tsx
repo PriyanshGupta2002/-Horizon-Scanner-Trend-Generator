@@ -177,7 +177,7 @@ const TrendForm = () => {
               </FormItem>
             )}
           />
-          <FormField
+          {/* <FormField
             control={form.control}
             name="no_of_gen"
             render={({ field }) => (
@@ -191,7 +191,7 @@ const TrendForm = () => {
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> */}
           <FormField
             control={form.control}
             name="email"

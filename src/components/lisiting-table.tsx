@@ -81,7 +81,7 @@ const ListingTable = () => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[500px]">File Id</TableHead>
+            <TableHead className="w-[500px]">File Name</TableHead>
             <TableHead>Geography</TableHead>
             <TableHead>Trends</TableHead>
             <TableHead>Email</TableHead>
