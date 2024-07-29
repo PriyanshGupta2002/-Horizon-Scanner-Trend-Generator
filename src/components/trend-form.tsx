@@ -70,7 +70,7 @@ const TrendForm = () => {
       form.resetField("Trends", { defaultValue: "" });
       toast({
         title:
-          "We will email you shortly. Once the processing is completed, you can either click the link in the email or download it directly from the listing to retrieve the trend.",
+          "We have received your request and will email you the trends shortly.",
         variant: "success",
       });
       form.reset();
@@ -207,7 +207,7 @@ const TrendForm = () => {
               </FormItem>
             )}
           />
-          <FormField
+          {/* <FormField
             control={form.control}
             name="filename"
             render={({ field }) => (
@@ -221,7 +221,7 @@ const TrendForm = () => {
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> */}
           <Button type="submit" variant={"primary"}>
             Generate
           </Button>

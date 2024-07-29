@@ -18,7 +18,7 @@ const Navbar = () => {
           <Bell className="w-5 h-5 fill-slate-100" />
 
           <div className="flex items-center gap-2">
-            Vikram Mohan Rao
+            Patrick McCreanor
             <ChevronDown className="w-5 h-5" />
           </div>
         </div>

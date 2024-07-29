@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import Navbar from "@/components/Navbar";
+import Sidebar from "@/components/sidebar/sidebar";
 
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+const roboto = Roboto({
+  weight: ["100", "300", "400", "500", "700", "900"],
+  subsets: ["cyrillic"],
 });
 
 export const metadata: Metadata = {
@@ -20,10 +21,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={roboto.className}>
         <Toaster />
         <Navbar />
-        {children}
+        <Sidebar />
+        <div className="ml-[250px]">{children}</div>
       </body>
     </html>
   );

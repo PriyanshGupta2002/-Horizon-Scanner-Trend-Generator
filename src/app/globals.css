@@ -33,6 +33,23 @@
       --ring: 222.2 84% 4.9%;
 
       --radius: 0.5rem;
+
+
+      --navbar-bg: #121c53;
+      --sdz-blue-100:#F4F6FC;
+      --dark-black-700:#28293D;
+      --dark-black-600:#555770;
+      --primary-purple-700:#5F30E2;
+      --dark-black-300:#D8D9E4;
+      --dark-black-400:#C7C9D9;
+      --dark-black-200:#E9E9F0;
+      --success-green-200:#E6F3E5;
+      --light-white-400:#F5F6F8;
+      --light-white-200:#FFFFFF;
+      --sdz-blue-800:#25357E;
+      --light-white-300:#FAFBFB;
+      --sdz-blue-interactive:#354CB5;
+      --activeSidebarLink: #C7D1FF;
     }
 
     .dark {

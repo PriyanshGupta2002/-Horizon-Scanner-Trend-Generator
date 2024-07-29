@@ -1,13 +1,13 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
 const config = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-	],
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -22,6 +22,21 @@ const config = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
+        bgPrimary: "var(--navbar-bg)",
+        sdzBlue100: "var(--sdz-blue-100)",
+        darkBlack700: "var(--dark-black-700)",
+        darkBlack600: "var(--dark-black-600)",
+        darkBlack400: "var(--dark-black-400)",
+        primaryPurple700: "var(--primary-purple-700)",
+        darkBlack300: "var(--dark-black-300)",
+        darkBlack200: "var(--dark-black-200)",
+        successGreen200: "var(--success-green-200)",
+        lightWhite400: "var(--light-white-400)",
+        lightWhite200: "var(--light-white-200)",
+        sdzBlue800: "var(--sdz-blue-800)",
+        lightWhite300: "var(--light-white-300)",
+        activeSidebarLink: "var(--activeSidebarLink)",
+        sdzBlueInteractive: "var(--sdz-blue-interactive)",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
@@ -75,6 +90,6 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config
+} satisfies Config;
 
-export default config
+export default config;
