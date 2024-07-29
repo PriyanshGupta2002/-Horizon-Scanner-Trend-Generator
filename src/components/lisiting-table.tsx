@@ -27,6 +27,7 @@ const ListingTable = () => {
         geography: item.input_data.geography,
         folderName: item.Foldername,
         fileName: item.input_data.filename,
+        display_name: item.display_name
       }));
       setListing(listData);
     } catch (error) {
@@ -81,21 +82,21 @@ const ListingTable = () => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[500px]">File Name</TableHead>
             <TableHead>Geography</TableHead>
             <TableHead>Trends</TableHead>
             <TableHead>Email</TableHead>
-            <TableHead className="text-right">Status</TableHead>
+            <TableHead className="w-[500px]">File Name</TableHead>
+            <TableHead className="text-right">Status/Download</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {listing &&
             listing.reverse().map((list, idx) => (
               <TableRow key={idx}>
-                <TableCell className="font-medium">{list.folderName}</TableCell>
                 <TableCell>{list.geography}</TableCell>
                 <TableCell>{list.trends}</TableCell>
                 <TableCell>{list.email}</TableCell>
+                <TableCell className="font-medium">{list?.display_name}</TableCell>
                 <TableCell className="text-right">
                   {list.status === true ? (
                     <HardDriveDownloadIcon

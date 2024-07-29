@@ -5,6 +5,7 @@ export interface ListingTableProps {
   geography: string;
   folderName: string;
   fileName: string;
+  display_name: string
 }
 
 interface InputData {
@@ -22,4 +23,5 @@ export interface DataStructure {
   Foldername: string;
   Status: boolean;
   input_data: InputData;
+  display_name: string,
 }
