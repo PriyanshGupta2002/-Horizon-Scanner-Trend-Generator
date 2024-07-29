@@ -26,36 +26,29 @@ import { useToast } from "./ui/use-toast";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { Card } from "./ui/card";
 const formSchema = z.object({
-  geography: z.string({
-    required_error: "Geography is required",
-  }),
-  dept: z.string({
-    required_error: "Department name is required",
-  }),
-  dept_invloved_in: z.string({
-    required_error: "Work Department Involved in is required.",
-  }),
-  Trends: z.string({
-    required_error: "Trend is required",
-  }),
-
+  geography: z.string(),
+  dept: z.string(),
+  Trends: z.string(),
   additional_details: z.string().optional(),
   no_of_gen: z.number().min(2).optional(),
   email: z.string().email(),
   filename: z.string().optional(),
-  attachments: z.array(z.instanceof(File)).optional(),
 });
+
 const TrendForm = () => {
   const router = useRouter();
-
   const { toast } = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      geography: "",
+      additional_details: "",
+      dept: "",
+      email: "",
+      filename: "",
       no_of_gen: 2,
+      Trends: "",
     },
   });
 
@@ -90,8 +83,6 @@ const TrendForm = () => {
       });
     }
   }
-
-  const [fileLength, setFileLength] = useState<string>("");
 
   return (
     <Form {...form}>
